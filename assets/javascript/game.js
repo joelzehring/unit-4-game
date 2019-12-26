@@ -7,7 +7,6 @@
 Game states:
   splash screen
   game start
-  game over
   character select
   opponent select
   new round
@@ -15,6 +14,9 @@ Game states:
   battle
   attack
   counter
+	win game
+	lose game
+	game over
 
 Data:
   character
@@ -37,8 +39,6 @@ Happy path:
   Player defeats remaining opponents
   Player wins game
 
-*/
-
 var characterRoster = [
   georgeW,
   abeL,
@@ -46,6 +46,12 @@ var characterRoster = [
   andJ,
 ]
 
+*/
+
+var playerCharacter = {};
+var enemyList = [];
+var enemiesDefeated = [];
+var round = 0;
 
 class Contender {
   constructor(name,healthPoints,attackPower,counterPower,powerUp) {
@@ -59,6 +65,10 @@ class Contender {
   takeDamage(attStrength) {
     this.healthPoints = this.healthPoints - attStrength;
   }
+
+	addAP(extraAttack) {
+		this.attackPower = this.attackPower + extraAttack;
+	}
 }
 
 var presidents = [
@@ -68,9 +78,41 @@ var presidents = [
 ["Jackson",20,2,7,3]
 ];
 
+function characterSelect() {
+
+}
+
+function enemySelect() {
+
+}
+
+function newRound() {
+
+}
+
+function winRound() {
+
+}
+
+function loseGame() {
+
+}
+
+function winGame() {
+
+}
+
+/*
+
+Testing object creation
+
 var playerCharacter = new Contender(...presidents[0]);
 var enemyA = new Contender(...presidents[1]);
 var enemyB = new Contender(...presidents[2]);
 var enemyC = new Contender(...presidents[3]);
 
-console.log(playerCharacter);
+console.log(`${playerCharacter.name} has ${playerCharacter.healthPoints} health points.`)
+playerCharacter.takeDamage(enemyA.attackPower);
+console.log(`${playerCharacter.name} now has ${playerCharacter.healthPoints} health points.`)
+
+*/
