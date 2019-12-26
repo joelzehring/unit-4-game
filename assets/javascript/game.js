@@ -49,7 +49,8 @@ var characterRoster = [
 */
 
 var playerCharacter = {};
-var enemyList = [];
+var activeEnemy	= {};
+var enemyQueue = [];
 var enemiesDefeated = [];
 var round = 0;
 
@@ -79,15 +80,16 @@ var presidents = [
 ];
 
 function characterSelect() {
-
+	playerCharacter = // Character that player clicks on
+	// filter other characters into enemyQueue
 }
 
 function enemySelect() {
-
+	// choose from enemies in enemyQueue
 }
 
 function newRound() {
-
+	// thinking this will be the main function for completing battles
 }
 
 function winRound() {
@@ -101,6 +103,24 @@ function loseGame() {
 function winGame() {
 
 }
+
+if (!playerCharacter) {
+	characterSelect(); // this function will also place enemy characters in enemyQueue so the player can defeat them one by one.
+}
+else if (!enemyQueue) {
+	winGame();
+}
+else if (!activeEnemy) {
+	newRound(); // this function includes choosing the next enemy and attacking the enemy until health points are depleted.
+}
+
+
+
+/*
+else if (playerCharacter.healthPoints > 0) {
+	newRound();
+}
+*/
 
 /*
 
