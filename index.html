@@ -17,12 +17,17 @@
     <h1>Presidential Showdown RPG</h1>
   </header>
   <main class="container">
-    <p class="instructions"></p>
-		<div class="battleground col-12 d-flex">
+		<div class="row">
+    	<p class="instructions"></p>
+		</div>
+		<div class="battleground row col-12 d-flex">
     	<div class="card character" id="george-div">George</div>
     	<div class="card character" id="abe-div">Abe</div>
     	<div class="card character" id="alex-div">Alex</div>
     	<div class="card character" id="andy-div">Andy</div>
+		</div>
+		<div class="row">
+			<button class="attack-button btn btn-danger">Attack!</button>
 		</div>
   </main>
   <footer>
@@ -73,6 +78,8 @@ $(document).ready(function() {
 		var enemyQueue = [];
 		var enemiesDefeated = [];
 
+		$(".attack-button").hide();
+
 		$(".instructions").text("Choose a hero.");
 
 		$(".character").on("click",function() {
@@ -90,15 +97,18 @@ $(document).ready(function() {
 
 	function newRound() {
 		
-		if (!isEnemySelected) {
-			$(".instructions").text("Choose an enemy to attack.");
-
-			$(".enemy").on("click",function() {
+		$(".instructions").text("Choose an enemy to attack.");
+		$(".enemy").on("click",function() {
+			if (!isEnemySelected) {
 				activeEnemy = $(this);
 				isEnemySelected = true;
-				$(this).removeClass("order-3").addClass("jumbotron order-2");
-			});
-		}
+				$(this).removeClass("ml-auto order-3").addClass("jumbotron order-2");
+			}
+			
+			if (isEnemySelected) {
+				$(".attack-button").show();
+			}
+		});
 	}
 
 	newGame();
