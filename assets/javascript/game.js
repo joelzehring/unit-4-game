@@ -55,12 +55,13 @@ var enemiesDefeated = [];
 var round = 0;
 
 class Contender {
-  constructor(name,healthPoints,attackPower,counterPower,powerUp) {
-    this.name = name;
-    this.healthPoints = healthPoints;
-    this.attackPower = attackPower;
-    this.counterPower = counterPower;
-    this.powerUp = powerUp;
+	constructor(name,divId,healthPoints,attackPower,counterPower,powerUp) {
+  	this.name = name;
+		this.divId = divId;
+  	this.healthPoints = healthPoints;
+  	this.attackPower = attackPower;
+  	this.counterPower = counterPower;
+  	this.powerUp = powerUp;
   }
 
   takeDamage(attStrength) {
@@ -73,10 +74,10 @@ class Contender {
 }
 
 var presidents = [
-["Washington",1,10,4,2],
-["Lincoln",5,5,3,1],
-["Hamilton",10,4,6,1],
-["Jackson",20,2,7,3]
+	["George","george-div",1,10,4,2],
+	["Abe","abe-div",5,5,3,1],
+	["Alex","alex-div",10,4,6,1],
+	["Andy","andy-div",20,2,7,3]
 ];
 
 function characterSelect() {

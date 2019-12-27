@@ -7,7 +7,7 @@
   <!-- Added a link to Bootstrap-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <!-- Added a link to our external stylesheet-->
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <!-- Added link to the jQuery Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <title>Star Wars RPG</title>
@@ -18,10 +18,12 @@
   </header>
   <main class="container">
     <p class="instructions"></p>
-    <div class="card character" id="characterA">George</div>
-    <div class="card character" id=”characterB">Abe</div>
-    <div class="card character" id="characterC">Alex</div>
-    <div class="card character" id="characterD">Andy</div>
+		<div class="battleground col-12 d-flex">
+    	<div class="card character" id="george-div">George</div>
+    	<div class="card character" id="abe-div">Abe</div>
+    	<div class="card character" id="alex-div">Alex</div>
+    	<div class="card character" id="andy-div">Andy</div>
+		</div>
   </main>
   <footer>
   
@@ -30,23 +32,78 @@
 
 $(document).ready(function() {
 
-  var hero = "";
+  var hero = {};
   var isHeroSelected = false;
-  var num = 0;
+	var activeEnemy	= {};
+	var isEnemySelected = false;
+	var enemyQueue = [];
+	var enemiesDefeated = [];
 
-  function newRound() {
+	class Contender {
+	  constructor(name,divId,healthPoints,attackPower,counterPower,powerUp) {
+    	this.name = name;
+		  this.divId = divId;
+    	this.healthPoints = healthPoints;
+    	this.attackPower = attackPower;
+    	this.counterPower = counterPower;
+    	this.powerUp = powerUp;
+  	}
 
-  }
+	  takeDamage(attStrength) {
+	    this.healthPoints = this.healthPoints - attStrength;
+	  }
 
-  $(".character").on("click",function() {
-    if (!isHeroSelected) {
-      $(this).addClass("jumbotron");
-      isHeroSelected = true;
-      newRound();
-    }
-  });
+		addAP(extraAttack) {
+			this.attackPower = this.attackPower + extraAttack;
+		}
+	}
 
-});
+	var presidents = [
+		["George","george-div",1,10,4,2],
+		["Abe","abe-div",5,5,3,1],
+		["Alex","alex-div",10,4,6,1],
+		["Andy","andy-div",20,2,7,3]
+	];
+
+	function newGame() {
+		var hero = {};
+  	var isHeroSelected = false;
+		var activeEnemy	= "";
+		var isEnemySelected = false;
+		var enemyQueue = [];
+		var enemiesDefeated = [];
+
+		$(".instructions").text("Choose a hero.");
+
+		$(".character").on("click",function() {
+		  if (!isHeroSelected) {
+				hero = $(this);
+		    isHeroSelected = true;
+				$(this).addClass("jumbotron order-1 hero");
+				enemyQueue = $(this).siblings();
+				console.log(enemyQueue);
+				enemyQueue.addClass("ml-auto enemy order-3");
+		    newRound();
+		  }
+		});
+	}
+
+	function newRound() {
+		
+		if (!isEnemySelected) {
+			$(".instructions").text("Choose an enemy to attack.");
+
+			$(".enemy").on("click",function() {
+				activeEnemy = $(this);
+				isEnemySelected = true;
+				$(this).removeClass("order-3").addClass("jumbotron order-2");
+			});
+		}
+	}
+
+	newGame();
+
+	});
 
 </script>
 </body>
