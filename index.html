@@ -47,20 +47,29 @@ $(document).ready(function() {
 	class Contender {
 	  constructor(name,divId,healthPoints,attackPower,counterPower,powerUp) {
     	this.name = name;
-		  this.divId = divId;
+		this.divId = divId;
     	this.healthPoints = healthPoints;
     	this.attackPower = attackPower;
     	this.counterPower = counterPower;
     	this.powerUp = powerUp;
   	}
 
-	  takeDamage(attStrength) {
+	  takeAttDamage(attStrength) {
 	    this.healthPoints = this.healthPoints - attStrength;
 	  }
 
-		addAP(extraAttack) {
-			this.attackPower = this.attackPower + extraAttack;
-		}
+      takeCounterDamage(attStrength) {
+        this.healthPoints = this.healthPoints - attStrength;
+      }
+
+	  addAP(extraAttack) {
+		this.attackPower = this.attackPower + extraAttack;
+	  }
+      
+      renderCharacter() {
+        $( "." + this.divId).text(this.name + this.healthPoints);
+        
+      }
 	}
 
 	var presidents = [
@@ -72,11 +81,16 @@ $(document).ready(function() {
 
 	function newGame() {
 		var hero = {};
-  	var isHeroSelected = false;
+  	  var isHeroSelected = false;
 		var activeEnemy	= "";
 		var isEnemySelected = false;
 		var enemyQueue = [];
 		var enemiesDefeated = [];
+
+// Not sure if this is right...
+        var playerCharacter = new Contender(...presidents[0]);
+        
+        playerCharacter.renderCharacter();
 
 		$(".attack-button").hide();
 
