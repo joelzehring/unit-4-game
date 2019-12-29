@@ -8,23 +8,130 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <!-- Added a link to our external stylesheet-->
   <link rel="stylesheet" href="assets/css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Gravitas+One|Ultra&display=swap" rel="stylesheet">
   <!-- Added link to the jQuery Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <title>Star Wars RPG</title>
+
+	<style>
+		/* Colors scheme from https://www.schemecolor.com/dollar-bill-color-scheme.php */
+		:root {
+			--black-olive: #3E3E3C;
+			--dirty-white: #E8E9C9;
+			--dollar-bill: #85BB65;
+			--sea-green: #228D57;
+		}
+
+		html, body, * {
+			background: var(--dirty-white);
+			color: var(--black-olive);
+		}
+
+		.header-title {
+			font-family: "Gravitas One", cursive;
+			text-shadow: 0 2px var(--black-olive);			
+			/* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
+			border: 1px solid var(--black-olive);
+		}	
+		
+		.instructions {
+			font-family: Ultra;
+		}
+
+		.card {
+			border: 1px solid var(--black-olive);
+			margin: 1em;
+			box-shadow: 0 2px 2px;
+		}
+		
+		.card-title {
+			font-family: Ultra;
+			font-size: 2em;
+			border: 1px solid var(--black-olive);
+			box-shadow: 0 2px 2px var(--black-olive);
+		}
+
+		.pres-img {
+			height: 240px;
+			width: 240px;
+			border: 1px solid var(--black-olive);
+		}
+
+		.george-img {
+			background: /* radial-gradient(circle, rgba(100%,0%,0%,.3), rgba(100%,0%,0%,1)), */ url(https://upload.wikimedia.org/wikipedia/commons/2/23/US_one_dollar_bill%2C_obverse%2C_series_2009.jpg);
+			background-position: 52% 50%;
+			background-size: 1200%;
+		}
+
+		.abe-img {
+			background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/US_%245_Series_2006_obverse.jpg/1920px-US_%245_Series_2006_obverse.jpg);
+			background-position: 43% 55%;
+		}
+
+		.alex-img {
+			background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/US10dollarbill-Series_2004A.jpg/1920px-US10dollarbill-Series_2004A.jpg);
+			background-position: 36% 50%;
+		}
+
+		.andy-img {
+			background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/US_%2420_Series_2006_Obverse.jpg/1920px-US_%2420_Series_2006_Obverse.jpg);
+			background-position: 45% 55%;
+		}
+
+	</style>
+
+  <title>Presidential Showdown RPG</title>
 </head>
 <body>
-  <header>
-    <h1>Presidential Showdown RPG</h1>
+  <header class="row">
+    <h1 class="col-12 header-title text-center">Presidential Showdown RPG</h1>
   </header>
   <main class="container">
 		<div class="row">
-    	<p class="instructions"></p>
+    	<p class="instructions col-12 text-center"></p>
 		</div>
-		<div class="battleground row col-12 d-flex">
-    	<div class="card character" id="george-div">George</div>
-    	<div class="card character" id="abe-div">Abe</div>
-    	<div class="card character" id="alex-div">Alex</div>
-    	<div class="card character" id="andy-div">Andy</div>
+		<div class="row">
+			<div class="battleground col-12 d-flex">
+			
+				<div id="george" class="card george-div">
+  				<div class="card-body">
+    				<p class="card-title text-center">George</p>
+  				</div>
+  				<div class="george-img pres-img" alt="Card image"></div>
+  				<div class="card-body">
+    				<p class="card-text">Health Points</p>
+  				</div>
+				</div>
+
+				<div id="abe" class="card abe-div">
+  				<div class="card-body">
+    				<p class="card-title text-center">Abe</p>
+  				</div>
+  				<div class="abe-img pres-img" alt="Card image"></div>
+  				<div class="card-body">
+    				<p class="card-text">Health Points</p>
+  				</div>
+				</div>
+
+				<div id="alex" class="card alex-div">
+  				<div class="card-body">
+    				<p class="card-title text-center">Alex</p>
+  				</div>
+  				<div class="alex-img pres-img" alt="Card image"></div>
+  				<div class="card-body">
+    				<p class="card-text">Health Points</p>
+  				</div>
+				</div>
+
+				<div id="andy" class="card andy-div">
+  				<div class="card-body">
+    				<p class="card-title text-center">Andy</p>
+  				</div>
+  				<div class="andy-img pres-img" alt="Card image"></div>
+  				<div class="card-body">
+    				<p class="card-text">Health Points</p>
+  				</div>
+				</div>
+			</div>
 		</div>
 		<div class="row">
 			<button class="attack-button btn btn-danger">Attack!</button>
@@ -35,75 +142,35 @@
   </footer>
 <script>
 
-$(document).ready(function() {
+$(document).ready(function(){
 
-  var hero = {};
+	var hero = {};
   var isHeroSelected = false;
 	var activeEnemy	= {};
 	var isEnemySelected = false;
 	var enemyQueue = [];
 	var enemiesDefeated = [];
 
-	class Contender {
-	  constructor(name,divId,healthPoints,attackPower,counterPower,powerUp) {
-    	this.name = name;
-		this.divId = divId;
-    	this.healthPoints = healthPoints;
-    	this.attackPower = attackPower;
-    	this.counterPower = counterPower;
-    	this.powerUp = powerUp;
-  	}
-
-	  takeAttDamage(attStrength) {
-	    this.healthPoints = this.healthPoints - attStrength;
-	  }
-
-      takeCounterDamage(attStrength) {
-        this.healthPoints = this.healthPoints - attStrength;
-      }
-
-	  addAP(extraAttack) {
-		this.attackPower = this.attackPower + extraAttack;
-	  }
-      
-      renderCharacter() {
-        $( "." + this.divId).text(this.name + this.healthPoints);
-        
-      }
-	}
-
-	var presidents = [
-		["George","george-div",1,10,4,2],
-		["Abe","abe-div",5,5,3,1],
-		["Alex","alex-div",10,4,6,1],
-		["Andy","andy-div",20,2,7,3]
-	];
-
 	function newGame() {
 		var hero = {};
-  	  var isHeroSelected = false;
+  	var isHeroSelected = false;
 		var activeEnemy	= "";
 		var isEnemySelected = false;
 		var enemyQueue = [];
 		var enemiesDefeated = [];
-
-// Not sure if this is right...
-        var playerCharacter = new Contender(...presidents[0]);
         
-        playerCharacter.renderCharacter();
-
 		$(".attack-button").hide();
 
 		$(".instructions").text("Choose a hero.");
 
-		$(".character").on("click",function() {
+		$(".card").on("click",function() {
 		  if (!isHeroSelected) {
-				hero = $(this);
+				hero = $(this).attr("id");
 		    isHeroSelected = true;
-				$(this).addClass("jumbotron order-1 hero");
+				console.log(hero);
+				$(this).addClass("order-1 hero");
 				enemyQueue = $(this).siblings();
-				console.log(enemyQueue);
-				enemyQueue.addClass("ml-auto enemy order-3");
+				enemyQueue.addClass("enemy order-3");
 		    newRound();
 		  }
 		});
@@ -114,9 +181,10 @@ $(document).ready(function() {
 		$(".instructions").text("Choose an enemy to attack.");
 		$(".enemy").on("click",function() {
 			if (!isEnemySelected) {
-				activeEnemy = $(this);
+				activeEnemy = $(this).attr("id");
 				isEnemySelected = true;
-				$(this).removeClass("ml-auto order-3").addClass("jumbotron order-2");
+				console.log(activeEnemy);
+				$(this).removeClass("order-3").addClass("order-2");
 			}
 			
 			if (isEnemySelected) {
@@ -126,8 +194,7 @@ $(document).ready(function() {
 	}
 
 	newGame();
-
-	});
+});
 
 </script>
 </body>
