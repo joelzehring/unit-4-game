@@ -50,6 +50,10 @@
 			box-shadow: 0 2px 2px var(--black-olive);
 		}
 
+		.hero > .card-body > .card-title:before, .hero > .card-body > .card-title:after {
+			content: "✪";
+		}
+
 		.pres-img {
 			height: 240px;
 			width: 240px;
@@ -98,7 +102,9 @@
   				</div>
   				<div class="george-img pres-img" alt="Card image"></div>
   				<div class="card-body">
-    				<p class="card-text">Health Points</p>
+    				<p class="card-text health-points"></p>
+						<p class="card-text attack-str"></p>
+						<p class="card-text counter-str"></p>
   				</div>
 				</div>
 
@@ -108,7 +114,9 @@
   				</div>
   				<div class="abe-img pres-img" alt="Card image"></div>
   				<div class="card-body">
-    				<p class="card-text">Health Points</p>
+    				<p class="card-text health-points"></p>
+						<p class="card-text attack-str"></p>
+						<p class="card-text counter-str"></p>
   				</div>
 				</div>
 
@@ -118,7 +126,9 @@
   				</div>
   				<div class="alex-img pres-img" alt="Card image"></div>
   				<div class="card-body">
-    				<p class="card-text">Health Points</p>
+    				<p class="card-text health-points"></p>
+						<p class="card-text attack-str"></p>
+						<p class="card-text counter-str"></p>
   				</div>
 				</div>
 
@@ -128,7 +138,9 @@
   				</div>
   				<div class="andy-img pres-img" alt="Card image"></div>
   				<div class="card-body">
-    				<p class="card-text">Health Points</p>
+    				<p class="card-text health-points"></p>
+						<p class="card-text attack-str"></p>
+						<p class="card-text counter-str"></p>
   				</div>
 				</div>
 			</div>
@@ -143,6 +155,37 @@
 <script>
 
 $(document).ready(function(){
+
+	var contenders = {
+		george: {
+			name: "george",
+			healthPoints: 10,
+			attackStrength: 1,
+			counterStrength: 1,
+			upgradePoints: 1
+		},
+		abe: {
+			name: "abe",
+			healthPoints: 10,
+			attackStrength: 1,
+			counterStrength: 1,
+			upgradePoints: 1
+		},
+		alex: {
+			name: "alex",
+			healthPoints: 10,
+			attackStrength: 1,
+			counterStrength: 1,
+			upgradePoints: 1
+		},
+		andy: {
+			name: "andy",
+			healthPoints: 10,
+			attackStrength: 1,
+			counterStrength: 1,
+			upgradePoints: 1
+		},
+	}
 
 	var hero = {};
   var isHeroSelected = false;
@@ -163,9 +206,23 @@ $(document).ready(function(){
 
 		$(".instructions").text("Choose a hero.");
 
+		$(".george-div .health-points").text("Health Points: " + contenders.george.healthPoints);
+		$(".george-div .attack-str").text("Attack Strength: " + contenders.george.attackStrength);
+
+		$(".abe-div .health-points").text("Health Points: " + contenders.abe.healthPoints);
+		$(".abe-div .attack-str").text("Attack Strength: " + contenders.abe.attackStrength);
+
+		$(".alex-div .health-points").text("Health Points: " + contenders.alex.healthPoints);
+		$(".alex-div .attack-str").text("Attack Strength: " + contenders.alex.attackStrength);
+
+
+		$(".andy-div .health-points").text("Health Points: " + contenders.andy.healthPoints);
+		$(".andy-div .attack-str").text("Attack Strength: " + contenders.andy.attackStrength);
+
+
 		$(".card").on("click",function() {
 		  if (!isHeroSelected) {
-				hero = $(this).attr("id");
+				hero = contenders[$(this).attr("id")];
 		    isHeroSelected = true;
 				console.log(hero);
 				$(this).addClass("order-1 hero");
@@ -181,14 +238,19 @@ $(document).ready(function(){
 		$(".instructions").text("Choose an enemy to attack.");
 		$(".enemy").on("click",function() {
 			if (!isEnemySelected) {
-				activeEnemy = $(this).attr("id");
+				activeEnemy = contenders[$(this).attr("id")];
 				isEnemySelected = true;
 				console.log(activeEnemy);
-				$(this).removeClass("order-3").addClass("order-2");
+				$(this).removeClass("order-3").addClass("active-enemy order-2 border-danger");
 			}
 			
+			// Attack button functionality
 			if (isEnemySelected) {
 				$(".attack-button").show();
+				$(".attack-button").on("click", function() {
+					activeEnemy.healthPoints = activeEnemy.healthPoints - hero.attackStrength;
+					console.log(activeEnemy);
+				});
 			}
 		});
 	}
