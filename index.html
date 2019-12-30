@@ -91,6 +91,7 @@
   <p class="instructions"></p>
   <div class="interface">
     <button class="attack-button">Attack!</button>
+		<button class="reset-button">Try Again</button>
   </div>
   <div class="battleground">
 
@@ -100,7 +101,7 @@
       <div class="pres-details george-deets">
         <p class="pres-name">George</p>
         <p class="pres-health">Health Points: <span class="hp"></span></p>
-        <p class="a">Attack Points: <span class="ap">2</span></p>
+        <p class="a">Attack Points: <span class="ap"></span></p>
         <p class="c">Counter Attack Points: <span class="cp">1</span></p>
         <p class="b">Bonus Points: <span class="bp">1</span></p>
       </div>
@@ -111,7 +112,7 @@
       <img class="pres-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/US_%245_Series_2006_obverse.jpg/1920px-US_%245_Series_2006_obverse.jpg" alt="Abraham Lincoln">
       <div class="pres-details abe-deets">
         <p class="pres-name">Abe</p>
-        <p class="pres-health">Health Points: <span class="hp">10</span></p>
+        <p class="pres-health">Health Points: <span class="hp"></span></p>
         <p class="a">Attack Points: <span class="ap">1</span></p>
         <p class="c">Counter Attack Points: <span class="cp">1</span></p>
         <p class="b">Bonus Points: <span class="bp">1</span></p>
@@ -161,10 +162,18 @@ $(document).ready(function(){
   function newGame() {
     $(".george-sec .hp").text(10);
     $(".george-sec .ap").text(2);
-    $("abe-sec .hp").text(10);
+    $(".abe-sec .hp").text(10);
+		$(".abe-sec .ap").text(1);
+		$(".alex-sec .hp").text(10);
+		$(".alex-sec .ap").text(1);
+		$(".andy-sec .hp").text(10);
+		$(".andy-sec .ap").text(1);
     isHeroSelected = false;
-	isEnemySelected = false;
+		isEnemySelected = false;
     enemyQueue = [];
+		$("section").removeClass("hero enemy active-enemy defeated");
+
+		$(".reset-button").hide();
         
     $(".attack-button").hide();
 
@@ -173,11 +182,11 @@ $(document).ready(function(){
     $(".character").on("click",function() {
       if (!isHeroSelected) {
         $(this).addClass("hero");
-	    isHeroSelected = true;
-	    enemyQueue = $(this).siblings();
-	    enemyQueue.addClass("enemy");
-	    newBattle();
-	  }
+	    	isHeroSelected = true;
+	    	enemyQueue = $(this).siblings();
+	    	enemyQueue.addClass("enemy");
+	    	newBattle();
+	  	}
     });
   }
 
@@ -190,30 +199,38 @@ $(document).ready(function(){
         isEnemySelected = true;
         newRound();
       }
-
     });
   }
 
   function newRound() {
     $(".attack-button").show();
-    $(".instructions").text ("Use the button to attack your enemy!");
+    $(".instructions").text("Use the button to attack your enemy!");
+
+// Battle math: health points minus attack points
     $(".attack-button").on("click", function() {
-      var newEnemyHP = $(".active-enemy .hp").text() - $(".hero .ap").text();
+      var newEnemyHP = parseInt($(".active-enemy .hp").text()) - parseInt($(".hero .ap").text());
       $(".active-enemy .hp").text(newEnemyHP);
-      var newHeroHP = $(".hero .hp").text() - $(".active-enemy .cp").text();
+      var newHeroHP = parseInt($(".hero .hp").text()) - parseInt($(".active-enemy .cp").text());
       $(".hero .hp").text(newHeroHP);
 
-      if ($(".active-enemy .hp").text() < 1) {
-        var newHeroAP = eval($(".hero .ap").text() + $(".active-enemy .bp").text());
+// Condition if hero runs out of health points in the battle
+			if ($(".hero .hp").text() < 1) {
+        $(".instructions").text("Game over! Click the button to try again.");
+				$(".reset-button").show().on("click", function(){
+					newGame();
+				});
+      }
+
+// Condition if enemy runs out of health points in the battle
+      else if ($(".active-enemy .hp").text() < 1) {
+        var newHeroAP = parseInt($(".hero .ap").text()) + parseInt($(".active-enemy .bp").text());
         $(".hero .ap").text(newHeroAP);
         $(".active-enemy").removeClass("active-enemy enemy").addClass("defeated");
         isEnemySelected = false;
         newBattle();
       }
 
-      if ($(".hero .hp").text() < 1) {
-        $(".instructions").text("Game over! Click the button to try again.");
-      }
+      
     });
     
   }
