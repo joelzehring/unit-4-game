@@ -15,14 +15,14 @@
 <style>
   :root {
     --black-olive: #3E3E3C;
-	--dirty-white: #E8E9C9;
-	--dollar-bill: #85BB65;
-	--sea-green: #228D57;
+		--dirty-white: #E8E9C9;
+		--dollar-bill: #85BB65;
+		--sea-green: #228D57;
   }
 
   html, body, * {
-	background: var(--dirty-white);
-	color: var(--black-olive);
+		background: var(--dirty-white);
+		color: var(--black-olive);
     font-family: sans-serif;
   }
 
@@ -113,7 +113,7 @@
       <div class="pres-details abe-deets">
         <p class="pres-name">Abe</p>
         <p class="pres-health">Health Points: <span class="hp"></span></p>
-        <p class="a">Attack Points: <span class="ap">1</span></p>
+        <p class="a">Attack Points: <span class="ap"></span></p>
         <p class="c">Counter Attack Points: <span class="cp">1</span></p>
         <p class="b">Bonus Points: <span class="bp">1</span></p>
       </div>
@@ -124,8 +124,8 @@
       <img class="pres-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/US10dollarbill-Series_2004A.jpg/1920px-US10dollarbill-Series_2004A.jpg" alt="Alexander Hamilton">
       <div class="pres-details alex-deets">
         <p class="pres-name">Alex</p>
-        <p class="pres-health">Health Points: <span class="hp">10</span></p>
-        <p class="a">Attack Points: <span class="ap">1</span></p>
+        <p class="pres-health">Health Points: <span class="hp"></span></p>
+        <p class="a">Attack Points: <span class="ap"></span></p>
         <p class="c">Counter Attack Points: <span class="cp">1</span></p>
         <p class="b">Bonus Points: <span class="bp">1</span></p>
       </div>
@@ -136,8 +136,8 @@
       <img class="pres-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/US_%2420_Series_2006_Obverse.jpg/1920px-US_%2420_Series_2006_Obverse.jpg" alt="Andrew Jackson">
       <div class="pres-details andy-deets">
         <p class="pres-name">Andy</p>
-        <p class="pres-health">Health Points: <span class="hp">10</span></p>
-        <p class="a">Attack Points: <span class="ap">1</span></p>
+        <p class="pres-health">Health Points: <span class="hp"></span></p>
+        <p class="a">Attack Points: <span class="ap"></span></p>
         <p class="c">Counter Attack Points: <span class="cp">1</span></p>
         <p class="b">Bonus Points: <span class="bp">1</span></p>
       </div>
@@ -191,15 +191,15 @@ $(document).ready(function(){
   }
 
   function newBattle() {
-	$(".instructions").text("Choose an enemy to attack.");
+		$(".instructions").text("Choose an enemy to attack.");
 
-	$(".enemy").on("click",function() {
-      if (!isEnemySelected) {
-        $(this).addClass("active-enemy");
-        isEnemySelected = true;
-        newRound();
-      }
-    });
+		$(".enemy").on("click",function() {
+  	  if (!isEnemySelected) {
+  	    $(this).addClass("active-enemy");
+  	    isEnemySelected = true;
+  	    newRound();
+  	  }
+  	});
   }
 
   function newRound() {
@@ -209,30 +209,37 @@ $(document).ready(function(){
 // Battle math: health points minus attack points
     $(".attack-button").on("click", function() {
       var newEnemyHP = parseInt($(".active-enemy .hp").text()) - parseInt($(".hero .ap").text());
-      $(".active-enemy .hp").text(newEnemyHP);
       var newHeroHP = parseInt($(".hero .hp").text()) - parseInt($(".active-enemy .cp").text());
-      $(".hero .hp").text(newHeroHP);
+
+// Condition if enemy runs out of health points in the battle
+      if (newEnemyHP < 1) {
+				$(".active-enemy .hp").text(0);
+// Upgrade hero attack strength
+				var newHeroAP = parseInt($(".hero .ap").text()) + parseInt($(".active-enemy .bp").text());
+				$(".hero .ap").text(newHeroAP);
+
+// Convert enemy to defeated, need a css profile to visually show eligibility
+        isEnemySelected = false;
+				$(".active-enemy").removeClass("active-enemy enemy").addClass("defeated");
+        newBattle();
+      }
+			
 
 // Condition if hero runs out of health points in the battle
-			if ($(".hero .hp").text() < 1) {
+			if (newHeroHP < 1) {
+				$(".hero .hp").text(0);
+				$(".attack-button").hide();
         $(".instructions").text("Game over! Click the button to try again.");
 				$(".reset-button").show().on("click", function(){
 					newGame();
 				});
       }
 
-// Condition if enemy runs out of health points in the battle
-      else if ($(".active-enemy .hp").text() < 1) {
-        var newHeroAP = parseInt($(".hero .ap").text()) + parseInt($(".active-enemy .bp").text());
-        $(".hero .ap").text(newHeroAP);
-        $(".active-enemy").removeClass("active-enemy enemy").addClass("defeated");
-        isEnemySelected = false;
-        newBattle();
-      }
-
-      
+// If all HP totals remain above 0, newRound
+      else { $(".hero .hp").text(newHeroHP);
+				$(".active-enemy .hp").text(newEnemyHP);
+			}
     });
-    
   }
 
   newGame();
