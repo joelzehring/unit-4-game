@@ -12,250 +12,214 @@
   <!-- Added link to the jQuery Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-	<style>
-		/* Colors scheme from https://www.schemecolor.com/dollar-bill-color-scheme.php */
-		:root {
-			--black-olive: #3E3E3C;
-			--dirty-white: #E8E9C9;
-			--dollar-bill: #85BB65;
-			--sea-green: #228D57;
-		}
+<style>
+  :root {
+    --black-olive: #3E3E3C;
+	--dirty-white: #E8E9C9;
+	--dollar-bill: #85BB65;
+	--sea-green: #228D57;
+  }
 
-		html, body, * {
-			background: var(--dirty-white);
-			color: var(--black-olive);
-		}
+  html, body, * {
+	background: var(--dirty-white);
+	color: var(--black-olive);
+    font-family: sans-serif;
+  }
 
-		.header-title {
-			font-family: "Gravitas One", cursive;
-			text-shadow: 0 2px var(--black-olive);			
-			/* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
-			border: 1px solid var(--black-olive);
-		}	
-		
-		.instructions {
-			font-family: Ultra;
-		}
+  .header-title {
+    margin: auto;
+    text-shadow: 0 2px var(--dollar-bill);
+    border: 1px solid var(--black-olive);
+    font-family: "Ultra", serif;
+  }
 
-		.card {
-			border: 1px solid var(--black-olive);
-			margin: 1em;
-			box-shadow: 0 2px 2px;
-		}
-		
-		.card-title {
-			font-family: Ultra;
-			font-size: 2em;
-			border: 1px solid var(--black-olive);
-			box-shadow: 0 2px 2px var(--black-olive);
-		}
+  .instructions {
+    margin: 1em;
+    font-family: "Ultra", serif;
+  }
 
-		.hero > .card-body > .card-title:before, .hero > .card-body > .card-title:after {
+  section {
+    display: flex;
+    border: .5px solid var(--black-olive);
+    box-shadow: 0 2px 2px var(--black-olive);
+    margin: 1em;
+    padding: .5em;
+  }
+
+  .pres-img {
+    width: 100px;
+    height: 100px;
+    padding-right: 1em;
+  }
+
+  .pres-details > p {
+    padding: 0;
+    margin: 0;
+  }
+
+  .pres-name {
+    font-size: 1.5em;
+    font-family: "Ultra", serif;
+    border-bottom: 1px solid var(--black-olive);
+  }
+
+  .hero > .pres-details > .pres-name:before, .hero > .pres-details > .pres-name:after {
 			content: "✪";
 		}
 
-		.pres-img {
-			height: 240px;
-			width: 240px;
-			border: 1px solid var(--black-olive);
-		}
+  .active-enemy > .pres-details > .pres-name {
+    color: red;
+  }
 
-		.george-img {
-			background: /* radial-gradient(circle, rgba(100%,0%,0%,.3), rgba(100%,0%,0%,1)), */ url(https://upload.wikimedia.org/wikipedia/commons/2/23/US_one_dollar_bill%2C_obverse%2C_series_2009.jpg);
-			background-position: 52% 50%;
-			background-size: 1200%;
-		}
-
-		.abe-img {
-			background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/US_%245_Series_2006_obverse.jpg/1920px-US_%245_Series_2006_obverse.jpg);
-			background-position: 43% 55%;
-		}
-
-		.alex-img {
-			background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/US10dollarbill-Series_2004A.jpg/1920px-US10dollarbill-Series_2004A.jpg);
-			background-position: 36% 50%;
-		}
-
-		.andy-img {
-			background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/US_%2420_Series_2006_Obverse.jpg/1920px-US_%2420_Series_2006_Obverse.jpg);
-			background-position: 45% 55%;
-		}
-
-	</style>
-
-  <title>Presidential Showdown RPG</title>
-</head>
-<body>
-  <header class="row">
-    <h1 class="col-12 header-title text-center">Presidential Showdown RPG</h1>
-  </header>
-  <main class="container">
-		<div class="row">
-    	<p class="instructions col-12 text-center"></p>
-		</div>
-		<div class="row">
-			<div class="battleground col-12 d-flex">
-			
-				<div id="george" class="card george-div">
-  				<div class="card-body">
-    				<p class="card-title text-center">George</p>
-  				</div>
-  				<div class="george-img pres-img" alt="Card image"></div>
-  				<div class="card-body">
-    				<p class="card-text health-points"></p>
-						<p class="card-text attack-str"></p>
-						<p class="card-text counter-str"></p>
-  				</div>
-				</div>
-
-				<div id="abe" class="card abe-div">
-  				<div class="card-body">
-    				<p class="card-title text-center">Abe</p>
-  				</div>
-  				<div class="abe-img pres-img" alt="Card image"></div>
-  				<div class="card-body">
-    				<p class="card-text health-points"></p>
-						<p class="card-text attack-str"></p>
-						<p class="card-text counter-str"></p>
-  				</div>
-				</div>
-
-				<div id="alex" class="card alex-div">
-  				<div class="card-body">
-    				<p class="card-title text-center">Alex</p>
-  				</div>
-  				<div class="alex-img pres-img" alt="Card image"></div>
-  				<div class="card-body">
-    				<p class="card-text health-points"></p>
-						<p class="card-text attack-str"></p>
-						<p class="card-text counter-str"></p>
-  				</div>
-				</div>
-
-				<div id="andy" class="card andy-div">
-  				<div class="card-body">
-    				<p class="card-title text-center">Andy</p>
-  				</div>
-  				<div class="andy-img pres-img" alt="Card image"></div>
-  				<div class="card-body">
-    				<p class="card-text health-points"></p>
-						<p class="card-text attack-str"></p>
-						<p class="card-text counter-str"></p>
-  				</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<button class="attack-button btn btn-danger">Attack!</button>
-		</div>
-  </main>
-  <footer>
+  .attack-button {
+    width: 50%;
+    margin: 1em;
+  }
   
-  </footer>
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1 class="header-title">Dollar Bill Showdown</h1>
+</header>
+
+<main>
+
+<!-- Instructions and feedback -->
+  <p class="instructions"></p>
+  <div class="interface">
+    <button class="attack-button">Attack!</button>
+  </div>
+  <div class="battleground">
+
+<!-- George -->
+    <section class="character george-sec">
+      <img class="pres-img" src="https://upload.wikimedia.org/wikipedia/commons/2/23/US_one_dollar_bill%2C_obverse%2C_series_2009.jpg" alt="George Washington">
+      <div class="pres-details george-deets">
+        <p class="pres-name">George</p>
+        <p class="pres-health">Health Points: <span class="hp"></span></p>
+        <p class="a">Attack Points: <span class="ap">2</span></p>
+        <p class="c">Counter Attack Points: <span class="cp">1</span></p>
+        <p class="b">Bonus Points: <span class="bp">1</span></p>
+      </div>
+    </section>
+
+<!-- abe -->
+    <section class="character abe-sec">
+      <img class="pres-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/US_%245_Series_2006_obverse.jpg/1920px-US_%245_Series_2006_obverse.jpg" alt="Abraham Lincoln">
+      <div class="pres-details abe-deets">
+        <p class="pres-name">Abe</p>
+        <p class="pres-health">Health Points: <span class="hp">10</span></p>
+        <p class="a">Attack Points: <span class="ap">1</span></p>
+        <p class="c">Counter Attack Points: <span class="cp">1</span></p>
+        <p class="b">Bonus Points: <span class="bp">1</span></p>
+      </div>
+    </section>
+
+<!-- alex -->
+    <section class="character alex-sec">
+      <img class="pres-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/US10dollarbill-Series_2004A.jpg/1920px-US10dollarbill-Series_2004A.jpg" alt="Alexander Hamilton">
+      <div class="pres-details alex-deets">
+        <p class="pres-name">Alex</p>
+        <p class="pres-health">Health Points: <span class="hp">10</span></p>
+        <p class="a">Attack Points: <span class="ap">1</span></p>
+        <p class="c">Counter Attack Points: <span class="cp">1</span></p>
+        <p class="b">Bonus Points: <span class="bp">1</span></p>
+      </div>
+    </section>
+
+<!-- andy -->
+    <section class="character andy-sec">
+      <img class="pres-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/US_%2420_Series_2006_Obverse.jpg/1920px-US_%2420_Series_2006_Obverse.jpg" alt="Andrew Jackson">
+      <div class="pres-details andy-deets">
+        <p class="pres-name">Andy</p>
+        <p class="pres-health">Health Points: <span class="hp">10</span></p>
+        <p class="a">Attack Points: <span class="ap">1</span></p>
+        <p class="c">Counter Attack Points: <span class="cp">1</span></p>
+        <p class="b">Bonus Points: <span class="bp">1</span></p>
+      </div>
+    </section>
+  </div>
+  
+</main>
+
+<footer>
+</footer>
+
 <script>
 
 $(document).ready(function(){
 
-	var contenders = {
-		george: {
-			name: "george",
-			healthPoints: 10,
-			attackStrength: 1,
-			counterStrength: 1,
-			upgradePoints: 1
-		},
-		abe: {
-			name: "abe",
-			healthPoints: 10,
-			attackStrength: 1,
-			counterStrength: 1,
-			upgradePoints: 1
-		},
-		alex: {
-			name: "alex",
-			healthPoints: 10,
-			attackStrength: 1,
-			counterStrength: 1,
-			upgradePoints: 1
-		},
-		andy: {
-			name: "andy",
-			healthPoints: 10,
-			attackStrength: 1,
-			counterStrength: 1,
-			upgradePoints: 1
-		},
-	}
-
-	var hero = {};
   var isHeroSelected = false;
-	var activeEnemy	= {};
-	var isEnemySelected = false;
-	var enemyQueue = [];
-	var enemiesDefeated = [];
+  var isEnemySelected = false;
+  var enemyQueue = [];
 
-	function newGame() {
-		var hero = {};
-  	var isHeroSelected = false;
-		var activeEnemy	= "";
-		var isEnemySelected = false;
-		var enemyQueue = [];
-		var enemiesDefeated = [];
+  // $(".instructions").text("Choose a hero.");
+
+  function newGame() {
+    $(".george-sec .hp").text(10);
+    $(".george-sec .ap").text(2);
+    $("abe-sec .hp").text(10);
+    isHeroSelected = false;
+	isEnemySelected = false;
+    enemyQueue = [];
         
-		$(".attack-button").hide();
+    $(".attack-button").hide();
 
-		$(".instructions").text("Choose a hero.");
+    $(".instructions").text("Choose a hero.");
 
-		$(".george-div .health-points").text("Health Points: " + contenders.george.healthPoints);
-		$(".george-div .attack-str").text("Attack Strength: " + contenders.george.attackStrength);
+    $(".character").on("click",function() {
+      if (!isHeroSelected) {
+        $(this).addClass("hero");
+	    isHeroSelected = true;
+	    enemyQueue = $(this).siblings();
+	    enemyQueue.addClass("enemy");
+	    newBattle();
+	  }
+    });
+  }
 
-		$(".abe-div .health-points").text("Health Points: " + contenders.abe.healthPoints);
-		$(".abe-div .attack-str").text("Attack Strength: " + contenders.abe.attackStrength);
+  function newBattle() {
+	$(".instructions").text("Choose an enemy to attack.");
 
-		$(".alex-div .health-points").text("Health Points: " + contenders.alex.healthPoints);
-		$(".alex-div .attack-str").text("Attack Strength: " + contenders.alex.attackStrength);
+	$(".enemy").on("click",function() {
+      if (!isEnemySelected) {
+        $(this).addClass("active-enemy");
+        isEnemySelected = true;
+        newRound();
+      }
 
+    });
+  }
 
-		$(".andy-div .health-points").text("Health Points: " + contenders.andy.healthPoints);
-		$(".andy-div .attack-str").text("Attack Strength: " + contenders.andy.attackStrength);
+  function newRound() {
+    $(".attack-button").show();
+    $(".instructions").text ("Use the button to attack your enemy!");
+    $(".attack-button").on("click", function() {
+      var newEnemyHP = $(".active-enemy .hp").text() - $(".hero .ap").text();
+      $(".active-enemy .hp").text(newEnemyHP);
+      var newHeroHP = $(".hero .hp").text() - $(".active-enemy .cp").text();
+      $(".hero .hp").text(newHeroHP);
 
+      if ($(".active-enemy .hp").text() < 1) {
+        var newHeroAP = eval($(".hero .ap").text() + $(".active-enemy .bp").text());
+        $(".hero .ap").text(newHeroAP);
+        $(".active-enemy").removeClass("active-enemy enemy").addClass("defeated");
+        isEnemySelected = false;
+        newBattle();
+      }
 
-		$(".card").on("click",function() {
-		  if (!isHeroSelected) {
-				hero = contenders[$(this).attr("id")];
-		    isHeroSelected = true;
-				console.log(hero);
-				$(this).addClass("order-1 hero");
-				enemyQueue = $(this).siblings();
-				enemyQueue.addClass("enemy order-3");
-		    newRound();
-		  }
-		});
-	}
+      if ($(".hero .hp").text() < 1) {
+        $(".instructions").text("Game over! Click the button to try again.");
+      }
+    });
+    
+  }
 
-	function newRound() {
-		
-		$(".instructions").text("Choose an enemy to attack.");
-		$(".enemy").on("click",function() {
-			if (!isEnemySelected) {
-				activeEnemy = contenders[$(this).attr("id")];
-				isEnemySelected = true;
-				console.log(activeEnemy);
-				$(this).removeClass("order-3").addClass("active-enemy order-2 border-danger");
-			}
-			
-			// Attack button functionality
-			if (isEnemySelected) {
-				$(".attack-button").show();
-				$(".attack-button").on("click", function() {
-					activeEnemy.healthPoints = activeEnemy.healthPoints - hero.attackStrength;
-					console.log(activeEnemy);
-				});
-			}
-		});
-	}
+  newGame();
 
-	newGame();
 });
 
 </script>
