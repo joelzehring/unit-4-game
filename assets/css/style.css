@@ -1,0 +1,62 @@
+:root {
+	--black-olive: #3E3E3C;
+	--dirty-white: #E8E9C9;
+	--dollar-bill: #85BB65;
+	--sea-green: #228D57;
+}
+
+html, body, * {
+	background: var(--dirty-white);
+	color: var(--black-olive);
+	font-family: sans-serif;
+}
+
+.header-title {
+	margin: auto;
+	text-shadow: 0 2px var(--dollar-bill);
+	border: 1px solid var(--black-olive);
+	font-family: "Ultra", serif;
+}
+
+.instructions {
+	margin: 1em;
+	font-family: "Ultra", serif;
+}
+
+section {
+	display: flex;
+	border: .5px solid var(--black-olive);
+	box-shadow: 0 2px 2px var(--black-olive);
+	margin: 1em;
+	padding: .5em;
+}
+
+.pres-img {
+	width: 100px;
+	height: 100px;
+	padding-right: 1em;
+}
+
+.pres-details > p {
+	padding: 0;
+	margin: 0;
+}
+
+.pres-name {
+	font-size: 1.5em;
+	font-family: "Ultra", serif;
+	border-bottom: 1px solid var(--black-olive);
+}
+
+.hero > .pres-details > .pres-name:before, .hero > .pres-details > .pres-name:after {
+		content: "✪";
+	}
+
+.active-enemy > .pres-details > .pres-name {
+	color: red;
+}
+
+.attack-button {
+	width: 50%;
+	margin: 1em;
+}

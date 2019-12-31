@@ -1,139 +1,150 @@
-// Star Wars RPG
+$(document).ready(function(){
 
-// Theme ideas: money presidents, soccer stars
+	class Contender {
+	  constructor(name,healthPoints,attackPoints,counterPoints,bonusPoints) {
+	    this.name = name;
+	    this.healthPoints = healthPoints;
+	    this.attackPoints = attackPoints;
+	    this.counterPoints = counterPoints;
+	    this.bonusPoints = bonusPoints;
+	  }
 
-/*
-
-Game states:
-  splash screen
-  game start
-  character select
-  opponent select
-  new round
-  win round
-  battle
-  attack
-  counter
-	win game
-	lose game
-	game over
-
-Data:
-  character
-  opponents
-  opponent defeated
-  health points
-  attack strength
-  counter attack strength
-  round
-  attack points bonus (after beating an opponent)
-
-Happy path:
-  Player lands on site
-  Player selects a character to start the game
-  Player selects an opponent to battle first
-  Player attacks opponent, decreasing health points
-  Opponent counters, decreasing player health points
-  Player attacks deplete opponent health, resulting in win
-  Player attack strength increases
-  Player defeats remaining opponents
-  Player wins game
-
-var characterRoster = [
-  georgeW,
-  abeL,
-  alexH,
-  andJ,
-]
-
-*/
-
-var playerCharacter = {};
-var activeEnemy	= {};
-var enemyQueue = [];
-var enemiesDefeated = [];
-var round = 0;
-
-class Contender {
-	constructor(name,divId,healthPoints,attackPower,counterPower,powerUp) {
-  	this.name = name;
-		this.divId = divId;
-  	this.healthPoints = healthPoints;
-  	this.attackPower = attackPower;
-  	this.counterPower = counterPower;
-  	this.powerUp = powerUp;
-  }
-
-  takeDamage(attStrength) {
-    this.healthPoints = this.healthPoints - attStrength;
-  }
-
-	addAP(extraAttack) {
-		this.attackPower = this.attackPower + extraAttack;
+	  takeDamage(attStrength) {
+	    //this.healthPoints = 
+			return this.healthPoints - attStrength;
+	  }
 	}
-}
 
-var presidents = [
-	["George","george-div",1,10,4,2],
-	["Abe","abe-div",5,5,3,1],
-	["Alex","alex-div",10,4,6,1],
-	["Andy","andy-div",20,2,7,3]
-];
+	var presidents = [
+		["george",10,2,1,1],
+		["abe",10,1,1,1],
+		["alex",10,1,1,1],
+		["andy",10,1,1,1]
+	];
 
-function characterSelect() {
-	playerCharacter = // Character that player clicks on
-	// filter other characters into enemyQueue
-}
+	var george = new Contender(...presidents[0]);
+	var abe = new Contender(...presidents[1]);
+	var alex = new Contender(...presidents[2]);
+	var andy = new Contender(...presidents[3]);
+	
+  var isHeroSelected = false;
+  var isEnemySelected = false;
+  var enemyQueue = [];
+	var hero = {};
+	var activeEnemy = {};
+	var newEnemyHP = 0;
+	var newHeroHP = 0;
 
-function enemySelect() {
-	// choose from enemies in enemyQueue
-}
+	console.log(george);
+	
+	function newGame() {
 
-function newRound() {
-	// thinking this will be the main function for completing battles
-}
+		george = new Contender(...presidents[0]);
+		abe = new Contender(...presidents[1]);
+		alex = new Contender(...presidents[2]);
+		andy = new Contender(...presidents[3]);
+		
+		isHeroSelected = false;
+		isEnemySelected = false;
+		enemyQueue = [];
+		hero = {};
+		activeEnemy = {};
 
-function winRound() {
+		$("section").show();	
+		$("button").hide();
+		$(".instructions").text("Select a hero.");
 
-}
+	// Select a hero and push other characters to enemyQueue
 
-function loseGame() {
+		$("section").on("click", function() {
+			if (!isHeroSelected) {
 
-}
+				// Assign class to section
+				$(this).addClass("hero");
 
-function winGame() {
+				// Assign hero data
+				isHeroSelected = true;
+				hero = eval($(this).attr("pres"));
 
-}
+				// Designate other sections as enemy sections
+				$(this).siblings().addClass("enemy");
 
-if (!playerCharacter) {
-	characterSelect(); // this function will also place enemy characters in enemyQueue so the player can defeat them one by one.
-}
-else if (!enemyQueue) {
-	winGame();
-}
-else if (!activeEnemy) {
-	newRound(); // this function includes choosing the next enemy and attacking the enemy until health points are depleted.
-}
+				// Assign enemies to array, not sure I'll need it though
+				var enemies = eval($(this).siblings());
+				for (var i of enemies) {
+					enemyQueue.push($(i).attr("pres"));
+				}
+			}
+			 
+			newBattle();
+		});
+	} // end function newGame()
 
+	function newBattle() {
+		$(".instructions").text("Select an enemy to battle.");
+		$("button").hide();
 
+		// Select an enemy to battle
+		$(".enemy").on("click", function() {
+			if (!isEnemySelected) {
+				// Assign class to section
+				$(this).addClass("active-enemy");
 
-/*
-else if (playerCharacter.healthPoints > 0) {
-	newRound();
-}
-*/
+				// Assign activeEnemy data
+				activeEnemy = eval($(this).attr("pres"));
+				isEnemySelected = true;
+				console.log(activeEnemy);
+			}
+			
+			newRound();
 
-/*
+		});
+	} // end function newBattle()
 
-Testing object creation
+	function newRound() {
+		$(".instructions").text("Use the button to attack the enemy!");
 
-var playerCharacter = new Contender(...presidents[0]);
-var enemyA = new Contender(...presidents[1]);
-var enemyB = new Contender(...presidents[2]);
-var enemyC = new Contender(...presidents[3]);
+		$(".attack-button").show();
 
-console.log(`${playerCharacter.name} has ${playerCharacter.healthPoints} health points.`)
-playerCharacter.takeDamage(enemyA.attackPower);
-console.log(`${playerCharacter.name} now has ${playerCharacter.healthPoints} health points.`)
+		$(".attack-button").on("click", function() {
 
-*/
+			if (hero.healthPoints < 1) {
+				// Game over
+				$(".active-enemy").removeClass("active-enemy");
+				$(".hero").removeClass("hero");
+				$(".enemy").removeClass("enemy");
+				$(".attack-button").hide();
+				$(".reset-button").show();
+				$(".instructions").text("You lost. Use the button to play again.");
+				$(".reset-button").on("click", function(){
+					newGame();
+				});
+			}
+
+			else if (activeEnemy.healthPoints < 1) {
+				// Battle won, new battle
+				$(".active-enemy").hide().removeClass("active-enemy enemy");
+				isEnemySelected = false;
+				activeEnemy = {};
+				$(".attack-button").hide();
+					newBattle();
+			}
+
+			else {
+				// Update health points and display
+				newEnemyHP = activeEnemy.takeDamage(hero.attackPoints); //activeEnemy.healthPoints - hero.attackPoints;
+				activeEnemy.healthPoints = newEnemyHP
+				$(".active-enemy .hp").text(newEnemyHP);
+
+				newHeroHP = hero.takeDamage(activeEnemy.counterPoints); // hero.healthPoints - activeEnemy.counterPoints;
+				hero.healthPoints = newHeroHP
+				$(".hero .hp").text(newHeroHP);
+
+				console.log("hero " + hero.healthPoints, "activeEnemy " + activeEnemy.healthPoints)
+			}
+		});
+	} // end function newRound()
+
+	newGame()
+
+});
