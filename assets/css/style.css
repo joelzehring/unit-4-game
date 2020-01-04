@@ -22,14 +22,17 @@ main {
 }
 
 .header-title {
-	margin: auto;
+  margin-right: 1em;
+  margin-left: 1em;
+  padding: .2em;
 	text-shadow: 0 2px var(--dollar-bill);
-	border: 1px solid var(--black-olive);
+	border-bottom: 1px solid var(--black-olive);
 	font-family: "Ultra", serif;
 }
 
 .instructions {
-	margin: 1em;
+  margin: .5em;
+  font-size: 1.5em;
 	font-family: "Ultra", serif;
 }
 
@@ -46,25 +49,30 @@ main {
 
 .hero {
   order: 1;
-  width: 45%;
+  box-shadow: 0 3px 3px var(--sea-green), 0 -0.5px 2px var(--sea-green);
 }
 
 .active-enemy {
   order: 2;
-  width: 45%
+  box-shadow: 0 3px 3px red, 0 -0.5px 2px red;
 }
 
 section {
 	box-shadow: 0 3px 3px var(--black-olive),0 -0.5px 2px var(--black-olive);
-  margin: 1em;
+  margin: .5em;
   order: 99;
   text-align: center;
   display: block;
 }
 
 .pres-img {
-	width: 300px;
-  height: 300px;
+	width: 200px;
+  height: 200px;
+}
+
+.hero > .pres-img, .active-enemy > .pres-img {
+  width: 400px;
+  height: 400px;
 }
 
 .pres-details > p {
@@ -84,17 +92,13 @@ section {
   flex-direction: row;
 }
 
-.hp {}
-  
-}
-
 .pres-details > .damage {
   color: red;
   font-weight: 700;
   align-self: flex-end;
 }
 
-.hero > .pres-details > .pres-name:before, .hero > .pres-details > .pres-name:after {
+.hero > .pres-name:before, .hero > .pres-name:after {
 	content: " ✪ ";
 }
 
