@@ -1,150 +1,112 @@
-$(document).ready(function(){
+$(document).ready(function() { // jQuery
 
 	class Contender {
 	  constructor(name,healthPoints,attackPoints,counterPoints,bonusPoints) {
-	    this.name = name;
-	    this.healthPoints = healthPoints;
-	    this.attackPoints = attackPoints;
-	    this.counterPoints = counterPoints;
-	    this.bonusPoints = bonusPoints;
+		this.name = name;
+		  this.healthPoints = healthPoints;
+		  this.attackPoints = attackPoints;
+		  this.counterPoints = counterPoints;
+		  this.bonusPoints = bonusPoints;
 	  }
-
+	
 	  takeDamage(attStrength) {
-	    //this.healthPoints = 
-			return this.healthPoints - attStrength;
+			var newHealth = this.healthPoints - attStrength;
+		this.healthPoints = newHealth;
+	  }
+	
+	  levelUp(fightBonus) {
+		return this.attackPoints + fightBonus;
 	  }
 	}
-
-	var presidents = [
-		["george",10,2,1,1],
-		["abe",10,1,1,1],
-		["alex",10,1,1,1],
-		["andy",10,1,1,1]
-	];
-
-	var george = new Contender(...presidents[0]);
-	var abe = new Contender(...presidents[1]);
-	var alex = new Contender(...presidents[2]);
-	var andy = new Contender(...presidents[3]);
 	
-  var isHeroSelected = false;
-  var isEnemySelected = false;
-  var enemyQueue = [];
+	var george,abe,alex,andy = {};
+	
+	var isHeroSelected = false;
+	var isEnemySelected = false;
 	var hero = {};
 	var activeEnemy = {};
-	var newEnemyHP = 0;
-	var newHeroHP = 0;
-
-	console.log(george);
 	
 	function newGame() {
-
-		george = new Contender(...presidents[0]);
-		abe = new Contender(...presidents[1]);
-		alex = new Contender(...presidents[2]);
-		andy = new Contender(...presidents[3]);
-		
-		isHeroSelected = false;
-		isEnemySelected = false;
-		enemyQueue = [];
-		hero = {};
-		activeEnemy = {};
-
-		$("section").show();	
-		$("button").hide();
-		$(".instructions").text("Select a hero.");
-
-	// Select a hero and push other characters to enemyQueue
-
-		$("section").on("click", function() {
-			if (!isHeroSelected) {
-
-				// Assign class to section
-				$(this).addClass("hero");
-
-				// Assign hero data
-				isHeroSelected = true;
-				hero = eval($(this).attr("pres"));
-
-				// Designate other sections as enemy sections
-				$(this).siblings().addClass("enemy");
-
-				// Assign enemies to array, not sure I'll need it though
-				var enemies = eval($(this).siblings());
-				for (var i of enemies) {
-					enemyQueue.push($(i).attr("pres"));
-				}
+		george = new Contender("george",10,5,1,1);
+		abe = new Contender("abe",10,1,1,1);
+		alex = new Contender("alex",10,1,1,1);
+		andy = new Contender("andy",10,1,1,1);
+	
+	  isHeroSelected = false;
+	  isEnemySelected = false;
+	  hero = {};
+	  activeEnemy = {};
+	
+	  $(".instructions").text("Choose a hero.");
+		$(".attack-button").hide();
+		$(".reset-button").hide();
+	  $("section").removeClass().addClass("character").show("fast");
+		$(".george-deets .hp").text(george.healthPoints);
+		$(".abe-deets .hp").text(abe.healthPoints);
+		$(".alex-deets .hp").text(alex.healthPoints);
+		$(".andy-deets .hp").text(andy.healthPoints);
+	}
+	
+	newGame();
+	
+	$(".character").on("click",function(){
+		if (!isHeroSelected) {
+			$(this).addClass("hero").animate();
+			hero = eval($(this).attr("pres"));
+			isHeroSelected = true;
+			$(this).siblings().addClass("enemy");
+		$(".instructions").text("Choose an enemy to battle.");    
+		}
+	
+		else if (!isEnemySelected) {
+		$(this).addClass("active-enemy").removeClass("enemy").animate();
+			activeEnemy = eval($(this).attr("pres"));
+			isEnemySelected = true;
+			$(".attack-button").show("fast");
+		$(".instructions").text("Use the button to attack.");
+	}
+	
+		else {
+			$(".instructions").text("Hero and enemy are already selected. Time to attack!");
+		}
+	});
+	
+	$(".attack-button").on("click",function(){
+		if (activeEnemy.healthPoints > 0) {
+			activeEnemy.takeDamage(hero.attackPoints);
+      $(".active-enemy .hp").text(activeEnemy.healthPoints);
+      $(".active-enemy .damage").text(0 - hero.attackPoints).show(50).hide(1000);
+	
+		  if (activeEnemy.healthPoints <= 0) {
+		    $(".active-enemy").hide(2000).addClass("defeated").removeClass("active-enemy");
+		    $(".attack-button").hide("hide");
+		    isEnemySelected = false;
+        $(".instructions").text("You win this round. Choose another enemy to battle.");
+        
+        if ($(".defeated").length == 3) {
+          $(".instructions").text("You are the Champion! Use the button to play again.");
+          $(".reset-button").show("fast").click(function() {newGame()});
+        }
+		  }
+				
+			if (hero.healthPoints > 0) {
+				hero.takeDamage(activeEnemy.counterPoints);
+        $(".hero .hp").text(hero.healthPoints);
+        $(".hero .damage").text(0 - activeEnemy.attackPoints).show(50).hide(1000);
 			}
-			 
-			newBattle();
-		});
-	} // end function newGame()
-
-	function newBattle() {
-		$(".instructions").text("Select an enemy to battle.");
-		$("button").hide();
-
-		// Select an enemy to battle
-		$(".enemy").on("click", function() {
-			if (!isEnemySelected) {
-				// Assign class to section
-				$(this).addClass("active-enemy");
-
-				// Assign activeEnemy data
-				activeEnemy = eval($(this).attr("pres"));
-				isEnemySelected = true;
-				console.log(activeEnemy);
-			}
-			
-			newRound();
-
-		});
-	} // end function newBattle()
-
-	function newRound() {
-		$(".instructions").text("Use the button to attack the enemy!");
-
-		$(".attack-button").show();
-
-		$(".attack-button").on("click", function() {
-
-			if (hero.healthPoints < 1) {
-				// Game over
-				$(".active-enemy").removeClass("active-enemy");
-				$(".hero").removeClass("hero");
-				$(".enemy").removeClass("enemy");
-				$(".attack-button").hide();
-				$(".reset-button").show();
-				$(".instructions").text("You lost. Use the button to play again.");
-				$(".reset-button").on("click", function(){
-					newGame();
-				});
-			}
-
-			else if (activeEnemy.healthPoints < 1) {
-				// Battle won, new battle
-				$(".active-enemy").hide().removeClass("active-enemy enemy");
-				isEnemySelected = false;
-				activeEnemy = {};
-				$(".attack-button").hide();
-					newBattle();
-			}
-
-			else {
-				// Update health points and display
-				newEnemyHP = activeEnemy.takeDamage(hero.attackPoints); //activeEnemy.healthPoints - hero.attackPoints;
-				activeEnemy.healthPoints = newEnemyHP
-				$(".active-enemy .hp").text(newEnemyHP);
-
-				newHeroHP = hero.takeDamage(activeEnemy.counterPoints); // hero.healthPoints - activeEnemy.counterPoints;
-				hero.healthPoints = newHeroHP
-				$(".hero .hp").text(newHeroHP);
-
-				console.log("hero " + hero.healthPoints, "activeEnemy " + activeEnemy.healthPoints)
-			}
-		});
-	} // end function newRound()
-
-	newGame()
-
-});
+	
+		  else {
+		    $(".instructions").text("You lose. Use the button to play again.");
+		    $(".attack-button").hide("fast");
+		    $(".reset-button").show("fast").click(function() {newGame()});
+		  }
+		}
+	});
+	
+	//$(".instructions").text("Choose a hero.");
+	//$(".instructions").text("Choose an enemy to battle.");
+	//$(".instructions").text("Use the button to attack.");
+	//$(".instructions").text("You win! Use the button to play again.");
+	//$(".instructions").text("You lose. Use the button to play again.");
+	
+}); // jQuery

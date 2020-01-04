@@ -8,7 +8,17 @@
 html, body, * {
 	background: var(--dirty-white);
 	color: var(--black-olive);
-	font-family: sans-serif;
+  font-family: sans-serif;
+}
+
+header {
+  text-align: center;
+}
+
+main {
+  max-width: 960px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .header-title {
@@ -23,40 +33,92 @@ html, body, * {
 	font-family: "Ultra", serif;
 }
 
-section {
+.interface {
+	height: 4em;
+}
+
+.battleground {
 	display: flex;
-	border: .5px solid var(--black-olive);
-	box-shadow: 0 2px 2px var(--black-olive);
-	margin: 1em;
-	padding: .5em;
+	flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.hero {
+  order: 1;
+  width: 45%;
+}
+
+.active-enemy {
+  order: 2;
+  width: 45%
+}
+
+section {
+	box-shadow: 0 3px 3px var(--black-olive),0 -0.5px 2px var(--black-olive);
+  margin: 1em;
+  order: 99;
+  text-align: center;
+  display: block;
 }
 
 .pres-img {
-	width: 100px;
-	height: 100px;
-	padding-right: 1em;
+	width: 300px;
+  height: 300px;
 }
 
 .pres-details > p {
 	padding: 0;
-	margin: 0;
+	margin: .5em;
 }
 
 .pres-name {
 	font-size: 1.5em;
-	font-family: "Ultra", serif;
+  font-family: "Ultra", serif;
+  margin: .5em;
 	border-bottom: 1px solid var(--black-olive);
 }
 
-.hero > .pres-details > .pres-name:before, .hero > .pres-details > .pres-name:after {
-		content: "✪";
-	}
+.pres-details {
+  display: flex;
+  flex-direction: row;
+}
 
-.active-enemy > .pres-details > .pres-name {
+.hp {}
+  
+}
+
+.pres-details > .damage {
+  color: red;
+  font-weight: 700;
+  align-self: flex-end;
+}
+
+.hero > .pres-details > .pres-name:before, .hero > .pres-details > .pres-name:after {
+	content: " ✪ ";
+}
+
+.active-enemy > .pres-name {
 	color: red;
 }
 
-.attack-button {
-	width: 50%;
+.defeated > .pres-details > .pres-name:before, .defeated > .pres-details > .pres-name:after {
+	content: " X ";
+}
+
+button {
+	width: 6em;
+	height: 3em;
+  color: white;
+  border: none;
+	border-radius: 5px;
 	margin: 1em;
+}
+
+.attack-button {
+  background-color: red;
+}
+
+.reset-button {
+  background-color: var(--sea-green);
 }

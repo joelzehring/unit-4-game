@@ -16,73 +16,69 @@
 
 <body>
 
-<header>
-  <h1 class="header-title">Dollar Bill Showdown</h1>
-</header>
-
-<main>
-
-<!-- Instructions and feedback -->
-  <p class="instructions"></p>
-  <div class="interface">
-    <button class="attack-button">Attack!</button>
-		<button class="reset-button">Try Again</button>
-  </div>
-  <div class="battleground">
-
-<!-- George -->
-    <section class="character george-sec" pres="george">
-      <img class="pres-img" src="assets/images/george.jpg" alt="George Washington">
-      <div class="pres-details george-deets">
-        <p class="pres-name">George</p>
-        <p class="pres-health">Health Points: <span class="hp"></span></p>
-        <p class="a">Attack Points: <span class="ap"></span></p>
-        <p class="c">Counter Attack Points: <span class="cp"></span></p>
-        <p class="b">Bonus Points: <span class="bp"></span></p>
-      </div>
-    </section>
-
-<!-- abe -->
-    <section class="character abe-sec" pres="abe">
-      <img class="pres-img" src="assets/images/abe.jpg" alt="Abraham Lincoln">
-      <div class="pres-details abe-deets">
-        <p class="pres-name">Abe</p>
-        <p class="pres-health">Health Points: <span class="hp"></span></p>
-        <p class="a">Attack Points: <span class="ap"></span></p>
-        <p class="c">Counter Attack Points: <span class="cp"></span></p>
-        <p class="b">Bonus Points: <span class="bp"></span></p>
-      </div>
-    </section>
-
-<!-- alex -->
-    <section class="character alex-sec" pres="alex">
-      <img class="pres-img" src="assets/images/alex.jpg" alt="Alexander Hamilton">
-      <div class="pres-details alex-deets">
-        <p class="pres-name">Alex</p>
-        <p class="pres-health">Health Points: <span class="hp"></span></p>
-        <p class="a">Attack Points: <span class="ap"></span></p>
-        <p class="c">Counter Attack Points: <span class="cp"></span></p>
-        <p class="b">Bonus Points: <span class="bp"></span></p>
-      </div>
-    </section>
-
-<!-- andy -->
-    <section class="character andy-sec" pres="andy">
-      <img class="pres-img" src="assets/images/andy.jpg" alt="Andrew Jackson">
-      <div class="pres-details andy-deets">
-        <p class="pres-name">Andy</p>
-        <p class="pres-health">Health Points: <span class="hp"></span></p>
-        <p class="a">Attack Points: <span class="ap"></span></p>
-        <p class="c">Counter Attack Points: <span class="cp"></span></p>
-        <p class="b">Bonus Points: <span class="bp"></span></p>
-      </div>
-    </section>
-  </div>
+  <header>
+    <h1 class="header-title">Dollar Bill Showdown</h1>
+  </header>
   
-</main>
-
-<footer>
-</footer>
+  <main>
+  
+  <!-- Instructions and feedback -->
+    <p class="instructions"></p>
+    <div class="interface">
+      <button class="attack-button">Attack!</button>
+      <button class="reset-button">Play Again</button>
+    </div>
+    <div class="battleground">
+  
+  <!-- George -->
+      <section class="character george-sec" pres="george">
+        <img class="pres-img" src="assets/images/george.jpg" alt="George Washington">
+        <p class="pres-name">George</p>
+        <div class="pres-details george-deets">
+          <p class="pres-health">Health Points: </p>
+          <p class="hp"></p>
+          <p class="damage"></p>
+        </div>
+      </section>
+  
+  <!-- abe -->
+      <section class="character abe-sec" pres="abe">
+        <img class="pres-img" src="assets/images/abe.jpg" alt="Abraham Lincoln">
+        <p class="pres-name">Abe</p>
+        <div class="pres-details abe-deets">
+          <p class="pres-health">Health Points: </p>
+          <p class="hp"></p>
+          <p class="damage"></p>
+        </div>
+      </section>
+  
+  <!-- alex -->
+      <section class="character alex-sec" pres="alex">
+        <img class="pres-img" src="assets/images/alex.jpg" alt="Alexander Hamilton">
+        <p class="pres-name">Alex</p>
+        <div class="pres-details alex-deets">
+          <p class="pres-health">Health Points: </p>
+          <p class="hp"></p>
+          <p class="damage"></p>
+        </div>
+      </section>
+  
+  <!-- andy -->
+      <section class="character andy-sec" pres="andy">
+        <img class="pres-img" src="assets/images/andy.jpg" alt="Andrew Jackson">
+        <p class="pres-name">Andy</p>
+        <div class="pres-details andy-deets">
+          <p class="pres-health">Health Points: </p>
+          <p class="hp"></p>
+          <p class="damage"></p>
+        </div>
+      </section>
+    </div>
+    
+  </main>
+  
+  <footer>
+  </footer>
 
 <script src="assets/javascript/game.js" type="text/javascript"></script>
 </body>
